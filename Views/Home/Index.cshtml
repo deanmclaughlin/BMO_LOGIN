@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    string headLabel;
+    if(!SignInManager.IsSignedIn(User))
+    {
+        ViewData["Title"] = "Home Page";
+        headLabel = "Welcome to People's Bank";
+    }
+    else
+    {
+        ViewData["Title"] = "Logged In";
+        headLabel = "People's Bank";
+    }
+}
+
+<div class="text-center">
+    <h1 class="display-4">@headLabel</h1>
+    <p>&nbsp;</p>
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <h2 style="color:rgb(0,0,230)">Login or Register to continue</h2>
+    }
+    else
+    {
+        <h2 style="color:rgb(0,160,0)">Logged in: @User.Identity.Name</h2>
+        <p>&nbsp;</p>
+        <div class="container-fluid">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item mb-3">
+                    <button class="btn btn-primary">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Registrations"
+                           asp-action="Index">New Client & Account</a>
+                    </button>
+                </li>
+                
+                <li class="nav-item mb-3">
+                    <button class="btn btn-primary">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Clients"
+                           asp-action="Index">Clients</a>
+                    </button>
+
+                    <button class="btn btn-primary">
+                        <a class="nav-link text-white" asp-area="" asp-controller="AccountTypes"
+                           asp-action="Index">Account Types</a>
+                    </button>
+
+                    <button class="btn btn-primary">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Accounts"
+                           asp-action="Index">Accounts</a>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+    }
+
+</div>
