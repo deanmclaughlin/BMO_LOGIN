@@ -14,7 +14,30 @@
         ViewData["Title"] = "Logged In";
         headLabel = "People's Bank";
     }
+
+    // add a button/link AND a drop-down list selection entry on the home page every table
+    // in the database by entering the following information for each table in the 2-D array
+    // allTables:
+    //      {"name to display on page", "name of the asp-controller", "name of the asp-action"}
+    // (then, no need to edit any of the HTML/CSS further down)
+    string[,] allTables = new string[,] {
+                            { "", "Home", "Index"},
+                            { "Clients", "Clients", "Index"},
+                            { "Account Types", "AccountTypes", "Index"},
+                            { "Accounts", "Accounts", "Index" },
+                            { "Clients rpt", "Clients", "Index"},
+                            { "Account Types rpt", "AccountTypes", "Index"},
+                            { "Accounts rpt", "Accounts", "Index" },
+                            { "Clients rpt2", "Clients", "Index"},
+                            { "Account Types rpt2", "AccountTypes", "Index"},
+                            { "Accounts rpt2", "Accounts", "Index" },
+                            { "Clients rpt3", "Clients", "Index"},
+                            { "Account Types rpt3", "AccountTypes", "Index"},
+                            { "Accounts rpt3", "Accounts", "Index" }
+                          };
+    int tableNumber = ViewBag.tableNumber ?? 0;
 }
+
 
 <div class="text-center">
     <h1 class="display-4">@headLabel</h1>
@@ -30,31 +53,80 @@
         <div class="container-fluid">
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item mb-3">
-                    <button class="btn btn-primary">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Registrations"
+                    <button class="btn btn-primary px-0 py-0 fw-bold">
+                        <a class="nav-link text-white px-3 py-3"
+                           asp-area="" asp-controller="Registrations"
                            asp-action="Index">New Client & Account</a>
                     </button>
                 </li>
+
+                <li class="nav-item">
+                    @for (int i = 1; i < allTables.GetLength(0); i++)
+                    {
+                        <button class="btn btn-secondary px-0 py-0 mb-3">
+                            <a class="nav-link text-white px-3 py-2" asp-area=""
+                               asp-controller=@allTables[@i, 1]
+                               asp-action=@allTables[@i, 2]>@allTables[@i, 0]</a>
+                        </button>
+                        <span>&nbsp;</span>
+                        @if (@i%4 == 0)
+                        {
+                            <br/>
+                        }
+                    }
+                </li>
                 
+                <!--
                 <li class="nav-item mb-3">
-                    <button class="btn btn-secondary">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Clients"
+                    <button class="btn btn-secondary px-0 py-0">
+                        <a class="nav-link text-white px-3 py-2"
+                           asp-area="" asp-controller="Clients"
                            asp-action="Index">Clients</a>
                     </button>
 
-                    <button class="btn btn-secondary">
-                        <a class="nav-link text-white" asp-area="" asp-controller="AccountTypes"
+                    <button class="btn btn-secondary px-0 py-0">
+                        <a class="nav-link text-white px-3 py-2"
+                           asp-area="" asp-controller="AccountTypes"
                            asp-action="Index">Account Types</a>
                     </button>
 
-                    <button class="btn btn-secondary">
-                        <a class="nav-link text-white" asp-area="" asp-controller="Accounts"
+                    <button class="btn btn-secondary px-0 py-0">
+                        <a class="nav-link text-white px-3 py-2"
+                           asp-area="" asp-controller="Accounts"
                            asp-action="Index">Accounts</a>
                     </button>
                 </li>
+                -->
+
+                <li class="nav-item mt-5">
+                <form method="post" enctype="multipart/form-data"
+                        asp-area="" asp-controller="Home" asp-action="Index">
+                    <label class="control-label mx-auto mb-1">Select Database Table</label>
+                    <select name="table_number" id="table_number" class ="form-control w-75 mx-auto"
+                            style="max-width:350px" onchange="this.form.submit()">                        
+                        <option value=0 selected disabled hidden></option>
+                        @for (int i = 1; i < allTables.GetLength(0); i++)
+                        {
+                            @if (@i == @tableNumber)
+                            {
+                                <option value=@i selected>@allTables[@i, 0]</option>
+                            }
+                            else
+                            {
+                                <option value=@i>@allTables[@i, 0]</option>                                   
+                            }
+                        }
+                    </select>
+
+                    <button class="btn btn-primary mt-2 px-0 py-0 fw-bold">
+                        <a class="nav-link text-white px-4 py-1" asp-area=""
+                            asp-controller=@allTables[@tableNumber, 1]
+                            asp-action=@allTables[@tableNumber, 2]>Go</a>
+                    </button>
+                </form>
+                </li>
             </ul>
         </div>
-
     }
-
 </div>
+
