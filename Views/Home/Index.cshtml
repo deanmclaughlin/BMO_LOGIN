@@ -68,10 +68,13 @@
                                asp-controller=@allTables[@i, 1]
                                asp-action=@allTables[@i, 2]>@allTables[@i, 0]</a>
                         </button>
-                        <span>&nbsp;</span>
                         @if (@i % 4 == 0)
                         {
                             <br/>
+                        }
+                        else
+                        {
+                            <span>&nbsp;</span>           
                         }
                     }
                 </li>
