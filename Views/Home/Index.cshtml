@@ -15,26 +15,29 @@
         headLabel = "People's Bank";
     }
 
-    // add a button/link AND/OR a drop-down list selection entry on the home page every table
-    // in the database by entering the following information for each table in the 2-D array
-    // allTables:
-    //      {"name to display on page", "name of the asp-controller", "name of the asp-action"}
+    // add a button/link AND/OR a drop-down list entry on the home page for the "Index" view
+    // of every table in the database, by putting the following information for each table in
+    // the 2-D string array called allTables:
+    //      {"name to display on page", "name of the asp-controller"}
     // then, no need to edit any of the HTML/CSS further down in this code
     string[,] allTables = new string[,] {
-                            { "", "Home", "Index"},
-                            { "Clients", "Clients", "Index"},
-                            { "Account Types", "AccountTypes", "Index"},
-                            { "Accounts", "Accounts", "Index" },
-                            { "Clients rpt", "Clients", "Index"},
-                            { "Account Types rpt", "AccountTypes", "Index"},
-                            { "Accounts rpt", "Accounts", "Index" },
-                            { "Clients rpt2", "Clients", "Index"},
-                            { "Account Types rpt2", "AccountTypes", "Index"},
-                            { "Accounts rpt2", "Accounts", "Index" },
-                            { "Clients rpt3", "Clients", "Index"},
-                            { "Account Types rpt3", "AccountTypes", "Index"},
-                            { "Accounts rpt3", "Accounts", "Index" }
-                          };
+                            { "", "Home"},
+                            { "Clients", "Clients"},
+                            { "Account Types", "AccountTypes"},
+                            { "Accounts", "Accounts"},
+                            { "Clients rpt", "Clients"},
+                            { "Account Types rpt", "AccountTypes"},
+                            { "Accounts rpt", "Accounts"},
+                            { "Clients rpt2", "Clients"},
+                            { "Account Types rpt2", "AccountTypes"},
+                            { "Accounts rpt2", "Accounts"},
+                            { "Clients rpt3", "Clients"},
+                            { "Account Types rpt3", "AccountTypes"},
+                            { "Accounts rpt3", "Accounts"},
+                            { "Accounts rpt4", "Accounts"},
+                            { "Clients rpt4", "Clients"}
+						};
+						
     int tableNumber = ViewBag.tableNumber ?? 0;
 }
 
@@ -55,8 +58,7 @@
                 <li class="nav-item mb-3">
                     <button class="btn btn-primary px-0 py-0 fw-bold">
                         <a class="nav-link text-white px-3 py-3"
-                           asp-area="" asp-controller="Registrations"
-                           asp-action="Index">New Client & Account</a>
+                           asp-area="" asp-controller="Registrations">New Client & Account</a>
                     </button>
                 </li>
 
@@ -65,17 +67,16 @@
                     {
                         <button class="btn btn-secondary px-0 py-0 mb-3">
                             <a class="nav-link text-white px-3 py-2" asp-area=""
-                               asp-controller=@allTables[@i, 1]
-                               asp-action=@allTables[@i, 2]>@allTables[@i, 0]</a>
+                               asp-controller=@allTables[@i, 1]>@allTables[@i, 0]</a>
                         </button>
                         @if (@i % 4 == 0)
                         {
                             <br/>
                         }
-                        else
-                        {
-                            <span>&nbsp;</span>           
-                        }
+						else
+						{
+                            <span>&nbsp;</span>						
+						}
                     }
                 </li>
                 
@@ -83,27 +84,25 @@
                 <li class="nav-item mb-3">
                     <button class="btn btn-secondary px-0 py-0">
                         <a class="nav-link text-white px-3 py-2"
-                           asp-area="" asp-controller="Clients"
-                           asp-action="Index">Clients</a>
+                           asp-area="" asp-controller="Clients">Clients</a>
                     </button>
 
                     <button class="btn btn-secondary px-0 py-0">
                         <a class="nav-link text-white px-3 py-2"
-                           asp-area="" asp-controller="AccountTypes"
-                           asp-action="Index">Account Types</a>
+                           asp-area="" asp-controller="AccountTypes">Account Types</a>
                     </button>
 
                     <button class="btn btn-secondary px-0 py-0">
                         <a class="nav-link text-white px-3 py-2"
-                           asp-area="" asp-controller="Accounts"
-                           asp-action="Index">Accounts</a>
+                           asp-area="" asp-controller="Accounts">Accounts</a>
                     </button>
                 </li>
                 -->
 
+                <!-- POST url (in select tag): alert(window.location.href + '?table_number=' + this.value) -->
                 <li class="nav-item mt-5">
                 <form method="post" enctype="multipart/form-data"
-                        asp-area="" asp-controller="Home" asp-action="Index">
+                        asp-area="" asp-controller="Home">
                     <label class="control-label mx-auto mb-1">Select Database Table</label>
                     <select name="table_number" id="table_number" class ="form-control w-75 mx-auto"
                             style="max-width:350px" onchange="this.form.submit()">                        
@@ -122,10 +121,14 @@
                     </select>
                 </form>
 
-                <button class="btn btn-primary mt-2 px-0 py-0 fw-bold">
-                    <a class="nav-link text-white px-4 py-1" asp-area=""
-                        asp-controller=@allTables[@tableNumber, 1]
-                        asp-action=@allTables[@tableNumber, 2]>Go</a>
+                <span id="newpath" class="d-none">
+                    @allTables[@tableNumber, 1]
+                </span>
+                <button class="btn btn-primary mt-2 px-0 py-0 fw-bold"
+                        onclick="newURL=window.location.protocol + '//' + window.location.host + '/'
+                                        + document.getElementById('newpath').innerText.trim();
+                                 window.location.replace(newURL);">
+                    <span class="nav-link text-white px-4 py-1">Go</span>
                 </button>
                 </li>
             </ul>
@@ -133,3 +136,21 @@
     }
 </div>
 
+<!--
+                <button class="btn btn-primary mt-2 px-0 py-0 fw-bold">
+                    <a class="nav-link text-white px-4 py-1"
+                        asp-area=""
+                        asp-controller=@allTables[@tableNumber, 1]>Go</a>
+                </button>
+
+
+                <span id="newpath" class="d-none">
+                    @allTables[@tableNumber, 1]
+                </span>
+                <button class="btn btn-primary mt-2 px-0 py-0 fw-bold"
+                        onclick="newURL=window.location.protocol + '//' + window.location.host + '/'
+                                        + document.getElementById('newpath').innerText.trim();
+                                 window.location.replace(newURL);">
+                    <span class="nav-link text-white px-4 py-1">Go</span>
+                </button>
+-->
