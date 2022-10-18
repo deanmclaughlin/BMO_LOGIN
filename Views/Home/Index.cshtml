@@ -73,33 +73,32 @@
                         {
                             <br/>
                         }
-			else
-			{
+						else
+						{
                             <span>&nbsp;</span>						
-			}
+						}
                     }
                 </li>
                 
                 <!--
                 <li class="nav-item mb-3">
                     <button class="btn btn-secondary px-0 py-0">
-                        <a class="nav-link text-white px-3 py-2"
-                           asp-area="" asp-controller="Clients">Clients</a>
+                        <a class="nav-link text-white px-3 py-2" asp-area=""
+                           asp-controller="Clients">Clients</a>
                     </button>
 
                     <button class="btn btn-secondary px-0 py-0">
-                        <a class="nav-link text-white px-3 py-2"
-                           asp-area="" asp-controller="AccountTypes">Account Types</a>
+                        <a class="nav-link text-white px-3 py-2" asp-area=""
+                           asp-controller="AccountTypes">Account Types</a>
                     </button>
 
                     <button class="btn btn-secondary px-0 py-0">
-                        <a class="nav-link text-white px-3 py-2"
-                           asp-area="" asp-controller="Accounts">Accounts</a>
+                        <a class="nav-link text-white px-3 py-2" asp-area=""
+                           asp-controller="Accounts">Accounts</a>
                     </button>
                 </li>
                 -->
 
-                <!-- POST url (in select tag): alert(window.location.href + '?table_number=' + this.value) -->
                 <li class="nav-item mt-5">
                 <form method="post" enctype="multipart/form-data"
                         asp-area="" asp-controller="Home">
@@ -121,9 +120,7 @@
                     </select>
                 </form>
 
-                <span id="newpath" class="d-none">
-                    @allTables[@tableNumber, 1]
-                </span>
+                <span id="newpath" class="d-none">@allTables[@tableNumber, 1]</span>
                 <button class="btn btn-primary mt-2 px-0 py-0 fw-bold"
                         onclick="newURL=window.location.protocol + '//' + window.location.host + '/'
                                         + document.getElementById('newpath').innerText.trim();
@@ -138,15 +135,12 @@
 
 <!--
                 <button class="btn btn-primary mt-2 px-0 py-0 fw-bold">
-                    <a class="nav-link text-white px-4 py-1"
-                        asp-area=""
+                    <a class="nav-link text-white px-4 py-1" asp-area=""
                         asp-controller=@allTables[@tableNumber, 1]>Go</a>
                 </button>
 
 
-                <span id="newpath" class="d-none">
-                    @allTables[@tableNumber, 1]
-                </span>
+                <span id="newpath" class="d-none">@allTables[@tableNumber, 1]</span>
                 <button class="btn btn-primary mt-2 px-0 py-0 fw-bold"
                         onclick="newURL=window.location.protocol + '//' + window.location.host + '/'
                                         + document.getElementById('newpath').innerText.trim();
